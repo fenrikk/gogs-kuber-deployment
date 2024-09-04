@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gogs-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gogs
+  template:
+    metadata:
+      labels:
+        app: gogs
+    spec:
+      containers:
+      - name: gogs
+        image: 10.211.55.36:5000/gogs:latest
+        ports:
+        - containerPort: 30000
+        - containerPort: 30022
+        envFrom:
+        - configMapRef:
+            name: gogs-config
+        env:
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-db
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-user
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: postgres-password
+        volumeMounts:
+        - name: gogs-repositories
+          mountPath: /gogs-repositories
+      volumes:
+      - name: gogs-repositories
+        persistentVolumeClaim:
+          claimName: gogs-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gogs-service
+spec:
+  selector:
+    app: gogs
+  type: NodePort
+  ports:
+    - name: http
+      port: 30000
+      targetPort: 30000
+      nodePort: 30000
+    - name: ssh
+      port: 30022
+      targetPort: 30022
+      nodePort: 30022
