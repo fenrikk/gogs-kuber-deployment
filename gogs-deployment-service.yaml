@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: gogs-deployment
 spec:
-  replicas: 3
+  replicas: 5
   selector:
     matchLabels:
       app: gogs
@@ -17,7 +17,6 @@ spec:
         image: 10.211.55.36:5000/gogs:latest
         ports:
         - containerPort: 3000
-        - containerPort: 22
         envFrom:
         - configMapRef:
             name: gogs-config
@@ -54,8 +53,5 @@ spec:
     app: gogs
   ports:
     - name: http
-      port: 3000
+      port: 80
       targetPort: 3000
-    - name: ssh
-      port: 22
-      targetPort: 22
