@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: gogs
-        image: 10.211.55.36:5000/gogs:latest
+        image: 10.211.55.36:5000/gogs:a591ce0b
         ports:
         - containerPort: 3000
         envFrom:
