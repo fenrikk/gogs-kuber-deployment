@@ -23,18 +23,18 @@ spec:
         - name: POSTGRES_DB
           valueFrom:
             secretKeyRef: 
-              name: postgres-secret
-              key: postgres-db
+              name: app-secret
+              key: db-name
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef: 
-              name: postgres-secret
-              key: postgres-user
+              name: app-secret
+              key: db-user
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef: 
-              name: postgres-secret
-              key: postgres-password
+              name: app-secret
+              key: db-password
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
@@ -54,26 +54,3 @@ spec:
     - protocol: TCP
       port: 5432
       targetPort: 5432
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pvc
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: postgres-pv
-spec:
-  capacity:
-    storage: 1Gi
-  accessModes:
-  - ReadWriteOnce
-  hostPath:
-    path: /data/postgres
