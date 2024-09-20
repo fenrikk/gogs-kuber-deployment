@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: gogs
-        image: 145023097801.dkr.ecr.eu-north-1.amazonaws.com/gogs:7532b47d
+        image: 145023097801.dkr.ecr.eu-north-1.amazonaws.com/gogs:02584da8
         ports:
         - containerPort: 3000
         envFrom:
