@@ -21,21 +21,26 @@ spec:
         - configMapRef:
             name: gogs-config
         env:
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: db-secrets
+              key: endpoint
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
-              name: app-secret
-              key: db-name
+              name: db-secrets
+              key: dbname
         - name: DB_USER
           valueFrom:
             secretKeyRef:
-              name: app-secret
-              key: db-user
+              name: db-secrets
+              key: username
         - name: DB_PASS
           valueFrom:
             secretKeyRef:
-              name: app-secret
-              key: db-password
+              name: db-secrets
+              key: password
         volumeMounts:
         - name: gogs-repositories
           mountPath: /gogs-repositories
