@@ -24,22 +24,22 @@ spec:
         - name: DB_HOST
           valueFrom:
             secretKeyRef:
-              name: db-secrets
+              name: updated-db-secrets
               key: endpoint
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
-              name: db-secrets
+              name: updated-db-secrets
               key: dbname
         - name: DB_USER
           valueFrom:
             secretKeyRef:
-              name: db-secrets
+              name: updated-db-secrets
               key: username
         - name: DB_PASS
           valueFrom:
             secretKeyRef:
-              name: db-secrets
+              name: updated-db-secrets
               key: password
         volumeMounts:
         - name: gogs-repositories
